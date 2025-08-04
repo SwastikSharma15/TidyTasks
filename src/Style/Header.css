@@ -152,3 +152,59 @@
   transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Night mode transitions */
+.theme-btn.night .unicode-version .morph-icon::before,
+.unicode-version.night .morph-icon::before {
+  transform: translate(-50%, -50%) rotate(-180deg) scale(0);
+  opacity: 0;
+}
+
+.theme-btn.night .unicode-version .morph-icon::after,
+.unicode-version.night .morph-icon::after {
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  opacity: 1;
+}
+
+/* Responsive header - keeps everything on same row on mobile */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0.75rem 1rem;
+    min-height: 60px;
+  }
+  
+  .logo-image {
+    height: 48px;
+    max-width: 120px;
+  }
+  
+  .theme-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .unicode-version .morph-icon::before,
+  .unicode-version .morph-icon::after {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0.5rem;
+  }
+  
+  .logo-image {
+    height: 40px;
+    max-width: 100px;
+  }
+  
+  .theme-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .unicode-version .morph-icon::before,
+  .unicode-version .morph-icon::after {
+    font-size: 18px;
+  }
+}

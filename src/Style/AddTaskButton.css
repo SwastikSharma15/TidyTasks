@@ -1,0 +1,41 @@
+/* Add task floating button - part of floating buttons container */
+.add-task-button {
+  width: 3.5rem;
+  height: 3.5rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--accent-blue);
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1; /* Added to ensure it stays circular */
+  padding: 0; /* Ensure no padding affects the shape */
+  overflow: visible; /* Ensure SVG is visible */
+}
+
+.add-task-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.add-task-button svg {
+  margin: 0;
+  padding: 0;
+  width: 24px; /* Explicitly set width */
+  height: 24px; /* Explicitly set height */
+  fill: currentColor; /* Ensure the SVG is filled with the current color */
+  display: block; /* Ensure proper display */
+}
+
+/* Responsive add button */
+@media (max-width: 768px) {
+  .add-task-button {
+    width: 3rem;
+    height: 3rem;
+  }
+}

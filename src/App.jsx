@@ -407,3 +407,73 @@ function App() {
     }
   }, [])
 
+  // Save dark mode preference
+  useEffect(() => {
+    localStorage.setItem('tidyTasksDarkMode', JSON.stringify(isDarkMode))
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode')
+      document.body.classList.add('dark')
+      document.body.classList.remove('light')
+    } else {
+      document.body.classList.remove('dark-mode')
+      document.body.classList.add('light')
+      document.body.classList.remove('dark')
+    }
+  }, [isDarkMode])
+
+  const handleAddTask = (newTask) => {
+    const task = {
+      id: Date.now().toString(),
+      ...newTask,
+      completed: false,
+      createdAt: new Date().toISOString()
+    }
+    setTasks(prev => [...prev, task])
+    setShowAddModal(false)
+  }
+
+  const handleEditTask = (updatedTask) => {
+    setTasks(prev => prev.map(task => 
+      task.id === updatedTask.id ? { ...updatedTask, completed: false } : task
+    ))
+    setEditingTask(null)
+    setShowAddModal(false)
+  }
+
+  const handleDeleteTask = (taskId) => {
+    setTasks(prev => prev.filter(task => task.id !== taskId))
+  }
+
+  const handleToggleComplete = (taskId) => {
+    setTasks(prev => {
+      // First, update the completion status of the task
+      const updatedTasks = prev.map(task => {
+        if (task.id === taskId) {
+          const updatedTask = { ...task, completed: !task.completed };
+          // If the task is being completed and it's pinned, unpin it
+          if (updatedTask.completed && task.isPinned) {
+            updatedTask.isPinned = false;
+          }
+          return updatedTask;
+        }
+        return task;
+      });
+      
+      // Find the task that was just toggled
+      const toggledTask = updatedTasks.find(task => task.id === taskId);
+      
+      // If the task was just completed, move it to the end of the list
+      if (toggledTask && toggledTask.completed) {
+        // Remove the task from its current position
+        const tasksWithoutToggled = updatedTasks.filter(task => task.id !== taskId);
+        
+        // Add it to the end
+        return [...tasksWithoutToggled, toggledTask];
+      }
+      
+      // If the task was uncompleted, just return the updated tasks
+      // The sorting in useEffect will handle putting it back in the right priority group
+      return updatedTasks;
+    });
+  };
+

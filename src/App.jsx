@@ -306,3 +306,104 @@ function App() {
           createdAt: new Date().toISOString()
         }
       ]
+      setTasks(sampleTasks)
+      setFilteredTasks(sampleTasks)
+    }
+    
+    // Load filter preference
+    try {
+      const savedFilter = localStorage.getItem('tidyTasksFilter')
+      if (savedFilter && savedFilter !== 'undefined') {
+        setActiveFilter(savedFilter)
+      }
+    } catch (error) {
+      console.error('Error loading filter preference:', error)
+    }
+    
+    // Load search query
+    try {
+      const savedSearch = localStorage.getItem('tidyTasksSearch')
+      if (savedSearch && savedSearch !== 'undefined') {
+        setSearchQuery(savedSearch)
+      }
+    } catch (error) {
+      console.error('Error loading search query:', error)
+    }
+  }, [])
+
+  // Save tasks to localStorage whenever tasks change
+  useEffect(() => {
+    try {
+      if (tasks && tasks.length > 0) {
+        localStorage.setItem('tidyTasks', JSON.stringify(tasks))
+      }
+    } catch (error) {
+      console.error('Error saving tasks to localStorage:', error)
+    }
+  }, [tasks])
+  
+  // Save filter preference
+  useEffect(() => {
+    localStorage.setItem('tidyTasksFilter', activeFilter)
+  }, [activeFilter])
+  
+  // Save search query
+  useEffect(() => {
+    localStorage.setItem('tidyTasksSearch', searchQuery)
+  }, [searchQuery])
+
+  // Filter and sort tasks based on search query, active filter, and priority
+  useEffect(() => {
+    let filtered = tasks
+
+    // Filter by status
+    if (activeFilter === 'Completed') {
+      filtered = filtered.filter(task => task.completed)
+    } else if (activeFilter === 'Pending') {
+      filtered = filtered.filter(task => !task.completed)
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      filtered = filtered.filter(task => 
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        task.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        task.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      )
+    }
+
+    // Sort tasks: completed tasks always at the end, then by priority only
+    // (no longer sorting by creation date within priority groups)
+    const priorityOrder = { 'high': 3, 'medium': 2, 'low': 1 }
+    
+    filtered = filtered.sort((a, b) => {
+      // FIRST: Always put completed tasks at the end, regardless of priority
+      if (a.completed !== b.completed) {
+        return a.completed ? 1 : -1
+      }
+      
+      // SECOND: If both have same completion status, sort by priority
+      const priorityA = priorityOrder[a.priority] || 1
+      const priorityB = priorityOrder[b.priority] || 1
+      
+      // Higher priority comes first for non-completed tasks
+      if (priorityA !== priorityB) {
+        return priorityB - priorityA
+      }
+      
+      // THIRD: No longer sorting by creation date - maintain current order
+      // This allows users to freely arrange tasks within priority groups
+      return 0
+    })
+
+    setFilteredTasks(filtered)
+  }, [tasks, searchQuery, activeFilter])
+
+  // Load dark mode preference
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('tidyTasksDarkMode')
+    if (savedDarkMode) {
+      setIsDarkMode(JSON.parse(savedDarkMode))
+    }
+  }, [])
+

@@ -492,4 +492,78 @@ function App() {
     ))
   }
 
+  return (
+    <div className="app-container">
+    <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
+      <Header 
+        isDarkMode={isDarkMode} 
+        onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+      />
+      
+      <main className="main-content">
+        <div className="content-container">
+          <SearchBar 
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
+          
+          <FilterButtons 
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+          />
+          
+          <h2 className="section-title">My Tasks</h2>
+          
+          <PriorityAwareTaskGrid 
+            tasks={filteredTasks}
+            onToggleComplete={handleToggleComplete}
+            onEditTask={setEditingTask}
+            onDeleteTask={handleDeleteTask}
+            onReorderTasks={handleReorderTasks}
+            onViewTask={setViewingTask}
+            onTogglePin={handleTogglePin}
+          />
+        </div>
+      </main>
+      
+      <div className="floating-buttons">
+        <div className="floating-buttons-column">
+          <button 
+            className="clear-completed-btn floating"
+            onClick={handleClearCompleted}
+            title="Clear Completed Tasks"
+            style={{ backgroundColor: '#6c757d', color: 'white' }}
+          >
+            Clear Completed Tasks
+          </button>
+          <AddTaskButton onClick={() => setShowAddModal(true)} />
+        </div>
+      </div>
+      
+      {(showAddModal || editingTask) && (
+        <AddTaskModal 
+          task={editingTask}
+          onSave={editingTask ? handleEditTask : handleAddTask}
+          onClose={() => {
+            setShowAddModal(false)
+            setEditingTask(null)
+          }}
+        />
+      )}
+      
+      {viewingTask && (
+        <ViewTaskModal 
+          task={viewingTask}
+          onClose={() => setViewingTask(null)}
+          onEdit={(task) => {
+            setEditingTask(task)
+            setShowAddModal(true)
+          }}
+        />
+      )}
+    </div>
+    </div>
+  )
+}
 
+export default App

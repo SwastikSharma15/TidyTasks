@@ -477,3 +477,19 @@ function App() {
     });
   };
 
+  const handleClearCompleted = () => {
+    setTasks(prev => prev.filter(task => !task.completed))
+  }
+
+  const handleReorderTasks = (reorderedTasks) => {
+    setTasks(reorderedTasks)
+    // No need for additional localStorage save as the tasks useEffect will handle it
+  }
+
+  const handleTogglePin = (taskId) => {
+    setTasks(prev => prev.map(task => 
+      task.id === taskId ? { ...task, isPinned: !task.isPinned } : task
+    ))
+  }
+
+

@@ -50,3 +50,50 @@ function EnhancedTaskCard({ task, onToggleComplete, onEdit, onDelete, onView, on
         }
     };
 
+    const handleCardClick = (e) => {
+        // Prevent opening modal when clicking on buttons or other interactive elements
+        if (e.target.closest('.task-actions') || e.target.closest('.status-toggle')) {
+            return;
+        }
+        onView(task);
+    };
+
+    return (
+        <div 
+            className={`task-card enhanced ${task.completed ? 'completed' : ''}`}
+            onClick={handleCardClick}
+        >
+            <div className="task-actions">
+                <button 
+                    className={`pin-btn ${task.isPinned ? 'pinned' : ''}`}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onTogglePin && onTogglePin(task.id);
+                    }}
+                    title={task.isPinned ? 'Unpin task' : 'Pin task'}
+                >
+                    📌
+                </button>
+                <button 
+                    className="edit-btn"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onEdit(task);
+                    }}
+                    title="Edit task"
+                >
+                    📝
+                </button>
+                <button 
+                    className="delete-btn"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(task.id);
+                    }}
+                    title="Delete task"
+                >
+                    🗑️
+                </button>
+            </div>
+
+            

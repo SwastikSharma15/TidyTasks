@@ -96,4 +96,26 @@ function EnhancedTaskCard({ task, onToggleComplete, onEdit, onDelete, onView, on
                 </button>
             </div>
 
-            
+            <div 
+                className="task-image enhanced"
+                style={{ background: task.color || '#e7edf4' }}
+            >
+                <div className="task-image-overlay">
+                    <StatusToggle 
+                        completed={task.completed}
+                        onToggle={(e) => {
+                            e.stopPropagation();
+                            onToggleComplete(task.id);
+                        }}
+                    />
+                </div>
+                {/* Priority color strip */}
+                <div 
+                    className="priority-strip"
+                    style={{ 
+                        backgroundColor: getPriorityColor(task.priority || 'low')
+                    }}
+                />
+            </div>
+
+     

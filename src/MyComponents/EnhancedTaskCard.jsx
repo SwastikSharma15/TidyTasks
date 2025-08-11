@@ -118,4 +118,44 @@ function EnhancedTaskCard({ task, onToggleComplete, onEdit, onDelete, onView, on
                 />
             </div>
 
-     
+            <div className="task-content">
+                <h3 className="task-title">{task.title}</h3>
+                {task.description && (
+                    <p className="task-description">
+                        {task.description.length > 100 
+                            ? `${task.description.substring(0, 100)}...` 
+                            : task.description
+                        }
+                    </p>
+                )}
+                {task.dueDate && (
+                    <p 
+                        className="task-due-date"
+                        style={{ color: getDueDateColor(task.dueDate) }}
+                    >
+                        Due: {formatDate(task.dueDate)}
+                    </p>
+                )}
+                <div className="task-meta">
+                    <span 
+                        className="task-priority"
+                        style={{ color: getPriorityColor(task.priority) }}
+                    >
+                        {task.priority ? `${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority` : 'Low Priority'}
+                    </span>
+                </div>
+                {task.tags && task.tags.length > 0 && (
+                    <div className="task-tags">
+                        {task.tags.map((tag, index) => (
+                            <span key={index} className="task-tag">
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+export default EnhancedTaskCard;

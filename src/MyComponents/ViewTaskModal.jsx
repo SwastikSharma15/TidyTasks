@@ -94,3 +94,44 @@ function ViewTaskModal({ task, onClose, onEdit }) {
                                 </span>
                             </div>
 
+                            <div className="view-task-field">
+                                <label>Created</label>
+                                <p className="view-task-created">{formatDateTime(task.createdAt)}</p>
+                            </div>
+                        </div>
+
+                        {task.tags && task.tags.length > 0 && (
+                            <div className="view-task-field">
+                                <label>Tags</label>
+                                <div className="view-task-tags">
+                                    {task.tags.map((tag, index) => (
+                                        <span key={index} className="view-task-tag">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="view-task-actions">
+                        <button 
+                            className="edit-task-btn"
+                            onClick={() => {
+                                onEdit(task);
+                                onClose();
+                            }}
+                        >
+                            📝 Edit Task
+                        </button>
+                        <button className="close-view-btn" onClick={onClose}>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default ViewTaskModal;

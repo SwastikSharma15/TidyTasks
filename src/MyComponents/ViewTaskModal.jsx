@@ -57,4 +57,40 @@ function ViewTaskModal({ task, onClose, onEdit }) {
                             </h3>
                         </div>
 
+                        {task.description && (
+                            <div className="view-task-field">
+                                <label>Description</label>
+                                <p className="view-task-description">{task.description}</p>
+                            </div>
+                        )}
+
+                        <div className="view-task-field-row">
+                            {task.dueDate && (
+                                <div className="view-task-field">
+                                    <label>Due Date</label>
+                                    <p className="view-task-due-date">{formatDate(task.dueDate)}</p>
+                                </div>
+                            )}
+
+                            <div className="view-task-field">
+                                <label>Priority</label>
+                                <span 
+                                    className="view-task-priority"
+                                    style={{ color: getPriorityColor(task.priority) }}
+                                >
+                                    {task.priority ? 
+                                        `${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)} Priority` : 
+                                        'Low Priority'
+                                    }
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="view-task-field-row">
+                            <div className="view-task-field">
+                                <label>Status</label>
+                                <span className={`view-task-status ${task.completed ? 'completed' : 'pending'}`}>
+                                    {task.completed ? '✅ Completed' : '⏳ Pending'}
+                                </span>
+                            </div>
 

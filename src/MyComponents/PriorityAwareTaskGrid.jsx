@@ -47,4 +47,53 @@ function PriorityAwareTaskGrid({ tasks, onToggleComplete, onEditTask, onDeleteTa
 
     // Group tasks by priority while maintaining original order within each priority
     // Completed tasks are excluded from priority grouping and placed at the end
- 
+    const groupTasksByPriority = (tasks) => {
+        const priorities = ['high', 'medium', 'low'];
+        const groups = {
+            pinned: [],
+            high: [],
+            medium: [],
+            low: []
+        };
+        const completedTasks = [];
+
+        // Separate completed tasks and group incomplete tasks by priority
+        // Completed tasks go to Others section even if they were pinned
+        tasks.forEach((task, originalIndex) => {
+            if (task.completed) {
+                completedTasks.push({ ...task, originalIndex });
+            } else if (task.isPinned) {
+                groups.pinned.push({ ...task, originalIndex });
+            } else {
+                const priority = task.priority || 'low';
+                groups[priority].push({ ...task, originalIndex });
+            }
+        });
+
+        // Flatten back to array: pinned tasks first, then by priority, then all completed tasks
+        return [
+            ...groups.pinned,
+            ...priorities.flatMap(priority => groups[priority]),
+            ...completedTasks
+        ];
+    };
+
+
+    const handleDragStart = (e, task, index) => {
+        setDraggedTask({ task, index });
+        e.dataTransfer.effectAllowed = 'move';
+    };
+
+    const handleDragOver = (e, index) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        setDragOverIndex(index);
+    };
+
+    const handleDragLeave = () => {
+        setDragOverIndex(null);
+    };
+
+    const handleDrop = (e, dropIndex) => {
+        e.preventDefault();
+        

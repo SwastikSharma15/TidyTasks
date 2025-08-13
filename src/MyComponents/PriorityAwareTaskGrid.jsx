@@ -97,3 +97,59 @@ function PriorityAwareTaskGrid({ tasks, onToggleComplete, onEditTask, onDeleteTa
     const handleDrop = (e, dropIndex) => {
         e.preventDefault();
         
+        if (draggedTask) {
+            const draggedPriority = draggedTask.task.priority || 'low';
+            const groupedTasks = groupTasksByPriority(tasks);
+            const dropTask = groupedTasks[dropIndex];
+            const dropPriority = dropTask ? (dropTask.priority || 'low') : draggedPriority;
+
+            // Don't do anything if dropping on the same task
+            if (draggedTask.task.id === dropTask?.id) {
+                setDraggedTask(null);
+                setDragOverIndex(null);
+                return;
+            }
+
+            // Create new tasks array
+            const newTasks = [...tasks];
+            const draggedTaskIndex = newTasks.findIndex(task => task.id === draggedTask.task.id);
+
+            // Remove the dragged task
+            const [draggedItem] = newTasks.splice(draggedTaskIndex, 1);
+            
+            // Update priority if changing priority groups
+            if (draggedPriority !== dropPriority) {
+                draggedItem.priority = dropPriority;
+            }
+            
+            // Find insertion position
+            let insertIndex;
+            if (dropTask) {
+                // Find where to insert in the new array (after removing dragged item)
+                insertIndex = newTasks.findIndex(task => task.id === dropTask.id);
+                
+                // If we're dragging within the same priority and moving down,
+                // we want to insert after the drop target
+                if (draggedPriority === dropPriority) {
+                    const originalDraggedIndex = tasks.findIndex(task => task.id === draggedTask.task.id);
+                    const originalDropIndex = tasks.findIndex(task => task.id === dropTask.id);
+                    
+                    if (originalDraggedIndex < originalDropIndex) {
+                        // Moving down in the list - insert after target
+                        insertIndex = insertIndex + 1;
+                    }
+                    // Moving up in the list - insert at target position (before)
+                }
+            } else {
+                insertIndex = newTasks.length;
+            }
+            
+            // Insert the dragged item at the correct position
+            newTasks.splice(insertIndex, 0, draggedItem);
+            onReorderTasks(newTasks);
+        }
+        
+        setDraggedTask(null);
+        setDragOverIndex(null);
+    };
+

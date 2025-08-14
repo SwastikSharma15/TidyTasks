@@ -44,4 +44,62 @@ function AddTaskModal({ task, onSave, onClose }) {
     }, [task]);
 
     // Handle keyboard shortcuts
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                onClose();
+            } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                // Ctrl+Enter or Cmd+Enter to save (alternative to just Enter)
+                e.preventDefault();
+                handleSubmit(e);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [onClose, formData]); // Include formData to ensure handleSubmit has current data
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!formData.title.trim()) return;
+
+        const taskData = {
+            ...formData,
+            tags: formData.tags.filter(tag => tag.trim() !== '')
+        };
+
+        if (task) {
+            onSave({ ...task, ...taskData });
+        } else {
+            onSave(taskData);
+        }
+    };
+
+    const handleAddTag = () => {
+        if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
+            setFormData(prev => ({
+                ...prev,
+                tags: [...prev.tags, tagInput.trim()]
+            }));
+            setTagInput('');
+        }
+    };
+
+    const handleRemoveTag = (tagToRemove) => {
+        setFormData(prev => ({
+            ...prev,
+            tags: prev.tags.filter(tag => tag !== tagToRemove)
+        }));
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && e.target.name !== 'description') {
+            e.preventDefault();
+            if (e.target.name === 'tagInput') {
+                handleAddTag();
+            } else {
+                handleSubmit(e);
+            }
+        }
+    };
 

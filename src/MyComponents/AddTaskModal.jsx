@@ -103,3 +103,57 @@ function AddTaskModal({ task, onSave, onClose }) {
         }
     };
 
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-header">
+                    <h2>{task ? 'Edit Task' : 'Add New Task'}</h2>
+                    <button className="close-btn" onClick={onClose}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="task-form">
+                    <div className="form-group">
+                        <label htmlFor="title">Title *</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={formData.title}
+                            onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                            onKeyPress={handleKeyPress}
+                            placeholder="Enter task title"
+                            required
+                        />
+                    </div>
+
+
+                    <div className="form-group">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={formData.description}
+                            onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                            placeholder="Enter task description"
+                            rows="3"
+                            className="resizable-textarea"
+                            style={{ resize: 'both', minHeight: '80px', maxHeight: '300px' }}
+                        />
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="dueDate">Due Date</label>
+                            <input
+                                type="date"
+                                id="dueDate"
+                                name="dueDate"
+                                value={formData.dueDate}
+                                onChange={(e) => setFormData(prev => ({ ...prev, dueDate: e.target.value }))}
+                                onKeyPress={handleKeyPress}
+                            /> 
+                        </div>

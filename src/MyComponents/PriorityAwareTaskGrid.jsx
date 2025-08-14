@@ -195,4 +195,50 @@ function PriorityAwareTaskGrid({ tasks, onToggleComplete, onEditTask, onDeleteTa
                                 onDrop={(e) => handleDrop(e, index)}
                                 onDragEnd={handleDragEnd}
                             >
-                                
+                                <EnhancedTaskCard
+                                    task={task}
+                                    onToggleComplete={onToggleComplete}
+                                    onEdit={onEditTask}
+                                    onDelete={onDeleteTask}
+                                    onView={onViewTask}
+                                    onTogglePin={onTogglePin}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {otherTasks.length > 0 && (
+                <div className="task-section">
+                    <h3 className="section-header">{pinnedTasks.length > 0 ? 'Others' : ''}</h3>
+                    <div className="task-grid" ref={othersGridRef}>
+                        {otherTasks.map((task, index) => (
+                            <div
+                                key={task.id}
+                                className={`task-grid-item ${dragOverIndex === index ? 'drag-over' : ''}`}
+                                draggable
+                                onDragStart={(e) => handleDragStart(e, task, task.originalIndex)}
+                                onDragOver={(e) => handleDragOver(e, index)}
+                                onDragLeave={handleDragLeave}
+                                onDrop={(e) => handleDrop(e, index)}
+                                onDragEnd={handleDragEnd}
+                            >
+                                <EnhancedTaskCard
+                                    task={task}
+                                    onToggleComplete={onToggleComplete}
+                                    onEdit={onEditTask}
+                                    onDelete={onDeleteTask}
+                                    onView={onViewTask}
+                                    onTogglePin={onTogglePin}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+export default PriorityAwareTaskGrid;

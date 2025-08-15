@@ -207,3 +207,44 @@ function AddTaskModal({ task, onSave, onClose }) {
                         )}
                     </div>
 
+                    <div className="form-group">
+                        <label>Task Color</label>
+                        <div className="color-picker-container">
+                            {predefinedColors.map((color, index) => (
+                                <button
+                                    key={index}
+                                    type="button"
+                                    className={`color-option ${formData.color === color ? 'selected' : ''}`}
+                                    style={{ backgroundColor: color }}
+                                    onClick={() => setFormData(prev => ({ ...prev, color }))}
+                                    title={`Color ${index + 1}`}
+                                />
+                            ))}
+                        </div>
+                        <div className="color-picker-custom">
+                            <label htmlFor="customColor">Custom Color:</label>
+                            <input
+                                type="color"
+                                id="customColor"
+                                value={formData.color}
+                                onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
+                                className="custom-color-input"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-actions">
+                        <button type="button" onClick={onClose} className="cancel-btn">
+                            Cancel
+                        </button>
+                        <button type="submit" className="save-btn">
+                            {task ? 'Update Task' : 'Create Task'}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}
+
+export default AddTaskModal;

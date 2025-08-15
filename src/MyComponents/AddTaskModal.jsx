@@ -157,3 +157,53 @@ function AddTaskModal({ task, onSave, onClose }) {
                                 onKeyPress={handleKeyPress}
                             /> 
                         </div>
+
+                        <div className="form-group">
+                            <label htmlFor="priority">Priority</label>
+                            <select
+                                id="priority"
+                                name="priority"
+                                value={formData.priority}
+                                onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value }))}
+                            >
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="tags">Tags</label>
+                        <div className="tag-input-container">
+                            <input
+                                type="text"
+                                id="tagInput"
+                                name="tagInput"
+                                value={tagInput}
+                                onChange={(e) => setTagInput(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                placeholder="Add a tag and press Enter"
+                            />
+                            <button type="button" onClick={handleAddTag} className="add-tag-btn">
+                                Add
+                            </button>
+                        </div>
+                        {formData.tags.length > 0 && (
+                            <div className="tags-list">
+                                {formData.tags.map((tag, index) => (
+                                    <span key={index} className="tag-item">
+                                        {tag}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveTag(tag)}
+                                            className="remove-tag-btn"
+                                        >
+                                            ×
+                                        </button>
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+

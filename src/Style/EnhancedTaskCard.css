@@ -1,0 +1,84 @@
+/* Enhanced Task card with priority strip */
+.task-card.enhanced {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.task-card.enhanced:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.task-card.enhanced.completed {
+  opacity: 0.7;
+}
+
+.task-card.enhanced.completed .task-title {
+  text-decoration: line-through;
+}
+
+/* Enhanced task image with priority strip */
+.task-image.enhanced {
+  width: 100%;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+/* Priority color strip - positioned below task image */
+.priority-strip {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  width: 100%;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+/* Enhanced task image overlay - keeps existing functionality */
+.task-image.enhanced .task-image-overlay {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0.5rem;
+  z-index: 2; /* Above priority strip */
+}
+
+/* Priority indicators for different drag states */
+.task-grid-item.drag-over .priority-strip {
+  height: 3px;
+  opacity: 0.8;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+/* Priority group separators - visual cues for drag zones */
+.priority-group-separator {
+  position: relative;
+  margin: 0.5rem 0;
+}
+
+.priority-group-separator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-color), transparent);
+  opacity: 0.3;
+}
+

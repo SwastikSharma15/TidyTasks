@@ -1,0 +1,166 @@
+/* Enhanced Task card with priority strip */
+.task-card.enhanced {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.task-card.enhanced:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.task-card.enhanced.completed {
+  opacity: 0.7;
+}
+
+.task-card.enhanced.completed .task-title {
+  text-decoration: line-through;
+}
+
+/* Enhanced task image with priority strip */
+.task-image.enhanced {
+  width: 100%;
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+/* Priority color strip - positioned below task image */
+.priority-strip {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  width: 100%;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+/* Enhanced task image overlay - keeps existing functionality */
+.task-image.enhanced .task-image-overlay {
+  position: absolute;
+  bottom: 0.25rem;
+  left: 0.5rem;
+  z-index: 2; /* Above priority strip */
+}
+
+/* Priority indicators for different drag states */
+.task-grid-item.drag-over .priority-strip {
+  height: 3px;
+  opacity: 0.8;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+/* Priority group separators - visual cues for drag zones */
+.priority-group-separator {
+  position: relative;
+  margin: 0.5rem 0;
+}
+
+.priority-group-separator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-color), transparent);
+  opacity: 0.3;
+}
+
+/* Enhanced drag and drop visual feedback */
+.task-grid-item.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg) scale(0.95);
+}
+
+.task-grid-item.drag-over {
+  transform: scale(1.05);
+  opacity: 0.9;
+  border: 2px dashed var(--accent-blue);
+  border-radius: var(--radius-lg);
+}
+
+.task-grid-item.drag-over .task-card.enhanced {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Priority-based hover effects */
+.task-card.enhanced[data-priority="high"]:hover .priority-strip {
+  height: 3px;
+  box-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+}
+
+.task-card.enhanced[data-priority="medium"]:hover .priority-strip {
+  height: 3px;
+  box-shadow: 0 0 8px rgba(255, 165, 0, 0.4);
+}
+
+.task-card.enhanced[data-priority="low"]:hover .priority-strip {
+  height: 3px;
+  box-shadow: 0 0 8px rgba(78, 205, 196, 0.4);
+}
+
+/* Dark mode adjustments for enhanced card */
+.dark-mode .task-card.enhanced {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.dark-mode .priority-strip {
+  opacity: 0.9;
+}
+
+.dark-mode .task-grid-item.drag-over {
+  border-color: var(--accent-blue);
+  background: rgba(69, 183, 209, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .priority-strip {
+    height: 1.5px;
+  }
+  
+  .task-grid-item.drag-over .priority-strip,
+  .task-card.enhanced:hover .priority-strip {
+    height: 2px;
+  }
+}
+
+/* Animation for priority changes */
+.priority-strip.changing {
+  animation: colorShift 0.5s ease-in-out;
+}
+
+@keyframes colorShift {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(1.5); opacity: 0.7; }
+  100% { transform: scaleY(1); }
+}
+
+/* Visual feedback for successful drop */
+.task-card.enhanced.drop-success {
+  animation: dropSuccess 0.6s ease-out;
+}
+
+@keyframes dropSuccess {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.02); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); }
+  50% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}

@@ -130,3 +130,133 @@ function AddTaskModal({ task, onSave, onClose }) {
                         />
                     </div>
 
+
+                    <div className="form-group">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={formData.description}
+                            onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                            placeholder="Enter task description"
+                            rows="3"
+                            className="resizable-textarea"
+                            style={{ resize: 'both', minHeight: '80px', maxHeight: '300px' }}
+                        />
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="dueDate">Due Date</label>
+                            <input
+                                type="date"
+                                id="dueDate"
+                                name="dueDate"
+                                value={formData.dueDate}
+                                onChange={(e) => setFormData(prev => ({ ...prev, dueDate: e.target.value }))}
+                                onKeyPress={handleKeyPress}
+                            /> 
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="priority">Priority</label>
+                            <select
+                                id="priority"
+                                name="priority"
+                                value={formData.priority}
+                                onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value }))}
+                            >
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="tags">Tags</label>
+                        <div className="tag-input-container">
+                            <input
+                                type="text"
+                                id="tagInput"
+                                name="tagInput"
+                                value={tagInput}
+                                onChange={(e) => setTagInput(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                placeholder="Add a tag and press Enter"
+                            />
+                            <button type="button" onClick={handleAddTag} className="add-tag-btn">
+                                Add
+                            </button>
+                        </div>
+                        {formData.tags.length > 0 && (
+                            <div className="tags-list">
+                                {formData.tags.map((tag, index) => (
+                                    <span key={index} className="tag-item">
+                                        {tag}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveTag(tag)}
+                                            className="remove-tag-btn"
+                                        >
+                                            ×
+                                        </button>
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="form-group">
+                        <label>Task Color</label>
+                        <div className="color-picker-container">
+                            {predefinedColors.map((color, index) => (
+                                <button
+                                    key={index}
+                                    type="button"
+                                    className={`color-option ${formData.color === color ? 'selected' : ''}`}
+                                    style={{ backgroundColor: color }}
+                                    onClick={() => setFormData(prev => ({ ...prev, color }))}
+                                    title={`Color ${index + 1}`}
+                                />
+                            ))}
+                        </div>
+                        <div className="color-picker-custom">
+                            <label htmlFor="customColor">Custom Color:</label>
+                            <input
+                                type="color"
+                                id="customColor"
+                                value={formData.color}
+                                onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
+                                className="custom-color-input"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <div className="pin-toggle">
+                            <input
+                                type="checkbox"
+                                id="isPinned"
+                                checked={formData.isPinned}
+                                onChange={(e) => setFormData(prev => ({ ...prev, isPinned: e.target.checked }))}
+                            />
+                            <label htmlFor="isPinned">📌 Pin this task</label>
+                        </div>
+                    </div>
+
+                    <div className="form-actions">
+                        <button type="button" onClick={onClose} className="cancel-btn">
+                            Cancel
+                        </button>
+                        <button type="submit" className="save-btn">
+                            {task ? 'Update Task' : 'Create Task'}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+}
+
+export default AddTaskModal;

@@ -103,3 +103,104 @@
 .task-form {
   padding: 1.5rem;
 }
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(61, 152, 244, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  max-height: 300px;
+  line-height: 1.5;
+}
+
+.resizable-textarea {
+  resize: both;
+}
+
+/* Form Row - Two columns */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Tag Input Container */
+.tag-input-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.tag-input-container input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.add-tag-btn {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--accent-blue);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  height: fit-content;
+}
+
+.add-tag-btn:hover {
+  background: #2980eb;
+  transform: translateY(-1px);
+}
+
+.add-tag-btn:active {
+  transform: translateY(0);
+}
+
+/* Tags List */
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+

@@ -513,3 +513,180 @@
   border-color: var(--text-secondary);
 }
 
+/* Pin Toggle */
+.pin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pin-toggle:hover {
+  background: rgba(61, 152, 244, 0.1);
+  border-color: var(--accent-blue);
+}
+
+.pin-toggle input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.pin-toggle label {
+  margin: 0;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* Dark Mode Adjustments */
+.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode .modal-content {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+.dark-mode .modal-header {
+  background: var(--bg-secondary);
+  border-bottom-color: var(--border-color);
+}
+
+.dark-mode .view-task-priority {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .view-task-status.completed {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.dark-mode .view-task-status.pending {
+  background: rgba(249, 158, 11, 0.2);
+}
+
+.dark-mode .view-task-tag,
+.dark-mode .tag-item {
+  background: var(--border-color);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.dark-mode .pin-toggle {
+  background: var(--border-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+  
+  .modal-header {
+    padding: 1rem;
+  }
+  
+  .task-form {
+    padding: 1rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+  
+  .view-task-field-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .view-task-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .edit-task-btn,
+  .close-view-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-header h2 {
+    font-size: 1.125rem;
+  }
+  
+  .view-task-title {
+    font-size: 1.25rem;
+  }
+  
+  .tag-input-container {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  
+  .add-tag-btn {
+    width: 100%;
+  }
+}
+
+/* Loading and transition states */
+.modal-content.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.modal-content.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  z-index: 100;
+}
+
+.dark-mode .modal-content.loading::after {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Smooth scrollbar for modal content */
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}

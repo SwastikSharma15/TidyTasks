@@ -414,3 +414,102 @@
   max-width: 100%;
 }
 
+.view-task-due-date,
+.view-task-created {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.view-task-priority {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  display: inline-block;
+}
+
+.view-task-status {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.view-task-status.completed {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-green);
+}
+
+.view-task-status.pending {
+  background: rgba(249, 158, 11, 0.1);
+  color: var(--warning-orange);
+}
+
+.view-task-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.view-task-tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+}
+
+/* View Task Actions */
+.view-task-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: 1.5rem;
+}
+
+.edit-task-btn {
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--accent-blue);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.edit-task-btn:hover {
+  background: #2980eb;
+  transform: translateY(-1px);
+}
+
+.close-view-btn {
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-view-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
